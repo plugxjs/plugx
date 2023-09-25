@@ -1,6 +1,6 @@
 # plugx
 
-> universal plugin framework intended for framework-agnostic application
+> universal plugin framework for web application
 
 ## LICENSE
 
