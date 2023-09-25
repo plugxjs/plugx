@@ -1,14 +1,21 @@
 {
   "name": "plugx",
   "version": "0.0.1",
+  "description": "universal plugin framework intended for framework-agnostic application",
   "type": "module",
   "packageManager": "pnpm@8.7.6",
-  "description": "universal plugin library intended for framework-agnostic application",
-  "main": "dist/index.cjs",
-  "exports": {
-    ".": "./dist/index.mjs"
-  },
-  "keywords": [],
   "author": "himself65 <himself65@outlook.com>",
-  "license": "MIT"
+  "scripts": {
+    "typecheck": "tsc -b tsconfig.json --diagnostics",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.6.5",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.5"
+  }
 }
