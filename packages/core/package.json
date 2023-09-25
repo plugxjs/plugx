@@ -1,0 +1,11 @@
+{
+  "name": "@plugxjs/core",
+  "type": "module",
+  "version": "0.0.1",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^3.22.2"
+  }
+}

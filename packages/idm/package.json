@@ -1,0 +1,27 @@
+{
+  "name": "@plugxjs/idm",
+  "description": "PlugX internet download manager",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/web": "^0.0.115",
+    "@types/whatwg-url": "^11.0.1"
+  },
+  "dependencies": {
+    "@plugxjs/core": "workspace:*",
+    "zod": "^3.22.2"
+  }
+}
