@@ -1,0 +1,11 @@
+{
+  "name": "@plugx/vite-plugin",
+  "version": "0.0.1",
+  "type": "module",
+  "dependencies": {
+    "@endo/static-module-record": "^0.8.2"
+  },
+  "devDependencies": {
+    "rollup": "^3.29.3"
+  }
+}

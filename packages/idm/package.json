@@ -16,10 +16,6 @@
       }
     }
   },
-  "devDependencies": {
-    "@types/web": "^0.0.115",
-    "@types/whatwg-url": "^11.0.1"
-  },
   "dependencies": {
     "@plugxjs/core": "workspace:*",
     "zod": "^3.22.2"
