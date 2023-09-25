@@ -23,7 +23,7 @@ describe('basic', () => {
     const main = output[0] as OutputChunk
     const staticJson = output[1] as OutputAsset
     expect(main.fileName).toBe('test.js')
-    expect(staticJson.fileName).toBe('test.mjs.static.json')
+    expect(staticJson.fileName).toBe('test.js.static.json')
     expect(main.code).toMatchSnapshot()
     console.log('output[1].code', output[1])
     expect(staticJson.source).toMatchSnapshot()
