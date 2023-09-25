@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { createDownloader, Domain } from '@plugxjs/idm'
+import { createDownloader, Domain } from '../src/index.js'
 
 let downloader: ReturnType<typeof createDownloader>
 

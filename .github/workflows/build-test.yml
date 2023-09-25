@@ -1,0 +1,35 @@
+name: Build & Test
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - .github/**
+      - '!.github/workflows/build-test.yml'
+  pull_request:
+  merge_group:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - .github/**
+      - '!.github/workflows/build-test.yml'
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run tests
+        run: pnpm run test
