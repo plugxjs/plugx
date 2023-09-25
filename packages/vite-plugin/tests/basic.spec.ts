@@ -25,7 +25,6 @@ describe('basic', () => {
     expect(main.fileName).toBe('test.js')
     expect(staticJson.fileName).toBe('test.js.static.json')
     expect(main.code).toMatchSnapshot()
-    console.log('output[1].code', output[1])
     expect(staticJson.source).toMatchSnapshot()
   })
 })
