@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./.cache/dist",
-    "moduleResolution": "Node",
+    "moduleResolution": "Node16",
     "lib": [
       "ESNext"
     ],
