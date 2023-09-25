@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`basic > should works 1`] = `
+"({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
+  $h‍_imports([]);
+  console.log(\\"Hello world!\\");
+};
+"
+`;
+
+exports[`basic > should works 2`] = `
+"{
+  \\"exports\\": {},
+  \\"imports\\": [],
+  \\"reexports\\": {}
+}"
+`;

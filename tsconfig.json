@@ -63,6 +63,9 @@
       "path": "./packages/idm/tsconfig.node.json"
     },
     {
+      "path": "./packages/vite-plugin/tsconfig.node.json"
+    },
+    {
       "path": "./packages/core/tsconfig.json"
     },
     {

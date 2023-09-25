@@ -1,21 +1,22 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./.cache/dist",
     "lib": [
       "ESNext"
     ],
     "types": [
-      "node"
-    ]
+      "web"
+    ],
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "rootDir": "./src"
   },
   "include": [
-    "vite.config.ts",
-    "./tests"
+    "./src"
   ],
   "references": [
     {
-      "path": "./tsconfig.json"
+      "path": "../core/tsconfig.json"
     }
   ]
 }
