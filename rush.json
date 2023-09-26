@@ -40,6 +40,11 @@
       "packageName": "@plugxjs-test/unit",
       "projectFolder": "tests/unit",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@plugxjs-test/integration",
+      "projectFolder": "tests/integration",
+      "shouldPublish": false
     }
   ]
 }

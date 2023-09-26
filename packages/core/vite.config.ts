@@ -5,12 +5,14 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
   build: {
     lib: {
-      entry: './src/index.ts',
-      fileName: 'index',
+      entry: {
+        index: './src/index.ts',
+        runtime: './src/runtime.ts'
+      },
       formats: ['cjs', 'es']
     },
     rollupOptions: {
-      external: ['zod', /^@plugxjs/]
+      external: ['zod', /^@plugxjs/, '@locker/near-membrane-dom', /^happy-dom/]
     }
   },
   plugins: [dts(), tsconfigPaths()]

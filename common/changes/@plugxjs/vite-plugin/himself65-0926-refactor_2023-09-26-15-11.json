@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/vite-plugin",
+      "comment": "Adding a new internal api `compile`",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@plugxjs/vite-plugin"
+}

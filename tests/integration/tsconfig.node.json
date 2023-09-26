@@ -6,7 +6,8 @@
       "ESNext"
     ],
     "types": [
-      "node"
+      "mocha",
+      "web"
     ]
   },
   "include": [

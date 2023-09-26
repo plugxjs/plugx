@@ -1,9 +1,9 @@
 {
-  "name": "@plugxjs-test/unit",
+  "name": "@plugxjs-test/integration",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "test": "vitest",
+    "test": "wtr",
     "build": "echo 'no build'"
   },
   "dependencies": {
@@ -12,14 +12,11 @@
     "@plugxjs/vite-plugin": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20.6.5",
     "@types/web": "^0.0.115",
-    "rollup": "^3.29.3",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.9",
-    "vite-plugin-dts": "^3.5.4",
-    "vite-tsconfig-paths": "^4.2.1",
+    "@types/mocha": "^10.0.1",
+    "@web/dev-server-esbuild": "^0.4.1",
+    "@web/test-runner": "^0.17.1",
     "vitest": "^0.34.5",
-    "jsdom": "^22.1.0"
+    "vite": "^4.4.9"
   }
 }
