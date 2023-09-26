@@ -40,7 +40,7 @@ export function compile (code: string, fileName: string): CompileResult {
   }
 }
 
-export default function plugx (options: PlugxOptions = {}): import('vite').Plugin {
+export function plugx (options: PlugxOptions = {}): import('vite').Plugin {
   const staticJsonSuffix = options.staticJsonSuffix ?? '.static.json'
   return {
     name: 'plugx',

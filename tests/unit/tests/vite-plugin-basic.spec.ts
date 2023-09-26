@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { build } from 'vite'
 import { fileURLToPath } from 'node:url'
 import { compile } from '@plugxjs/vite-plugin'
-import plugx from '@plugxjs/vite-plugin'
+import { plugx } from '@plugxjs/vite-plugin'
 import type { RollupOutput } from 'rollup'
 import type { OutputAsset, OutputChunk } from 'rollup'
 
