@@ -4,7 +4,10 @@
   "pnpmVersion": "8.7.6",
   "nodeSupportedVersionRange": ">=18.16.1 <21.0.0",
   "gitPolicy": {},
-  "repository": {},
+  "repository": {
+    "url": "https://github.com/plugxjs/plugx",
+    "defaultBranch": "main"
+  },
   "eventHooks": {
     "preRushInstall": [],
     "postRushInstall": [],
