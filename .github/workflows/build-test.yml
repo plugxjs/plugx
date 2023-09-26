@@ -46,8 +46,8 @@ jobs:
         run: node ../../common/scripts/install-run-rushx.js test
         working-directory: tests/integration
 
-  compile:
-    name: Compile
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,5 +56,7 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
+      - name: Prettier
+        run: node common/scripts/install-run-rush.js prettier
       - name: Compile
         run: node common/scripts/install-run-rush.js compile
