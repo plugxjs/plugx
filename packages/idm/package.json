@@ -21,6 +21,7 @@
     }
   },
   "scripts": {
+    "compile": "tsc -p tsconfig.json",
     "build": "vite build"
   },
   "dependencies": {
