@@ -1,5 +1,6 @@
+/// <reference types="web" />
 import { describe, it, beforeEach } from 'vitest'
-import { createDownloader, Domain } from '../src/index.js'
+import { createDownloader, Domain } from '@plugxjs/idm'
 
 let downloader: ReturnType<typeof createDownloader>
 

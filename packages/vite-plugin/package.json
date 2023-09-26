@@ -1,11 +1,28 @@
 {
-  "name": "@plugx/vite-plugin",
+  "name": "@plugxjs/vite-plugin",
   "version": "0.0.1",
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vite build"
+  },
   "dependencies": {
     "@endo/static-module-record": "^0.8.2"
-  },
-  "devDependencies": {
-    "rollup": "^3.29.3"
   }
 }

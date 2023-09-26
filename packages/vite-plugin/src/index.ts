@@ -8,8 +8,8 @@ export interface PlugxOptions {
   staticJsonSuffix?: string
 }
 
-export default function plugx (options?: PlugxOptions): Plugin {
-  const staticJsonSuffix = options?.staticJsonSuffix ?? '.static.json'
+export default function plugx (options: PlugxOptions = {}): Plugin {
+  const staticJsonSuffix = options.staticJsonSuffix ?? '.static.json'
   return {
     name: 'plugx',
     enforce: 'post',

@@ -1,0 +1,15 @@
+{
+  "name": "@plugx-test/unit",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@plugxjs/core": "workspace:*",
+    "@plugxjs/idm": "workspace:*",
+    "@plugxjs/vite-plugin": "workspace:*"
+  },
+  "devDependencies": {
+    "rollup": "^3.29.3"
+  }
+}

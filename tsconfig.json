@@ -55,7 +55,9 @@
       "@plugxjs/core": ["./packages/core/src"],
       "@plugxjs/core/*": ["./packages/core/src/*"],
       "@plugxjs/idm": ["./packages/idm/src"],
-      "@plugxjs/idm/*": ["./packages/idm/src/*"]
+      "@plugxjs/idm/*": ["./packages/idm/src/*"],
+      "@plugxjs/vite-plugin": ["./packages/vite-plugin/src"],
+      "@plugxjs/vite-plugin/*": ["./packages/vite-plugin/src/*"]
     }
   },
   "references": [
@@ -66,7 +68,7 @@
       "path": "./packages/vite-plugin/tsconfig.node.json"
     },
     {
-      "path": "./packages/core/tsconfig.json"
+      "path": "./packages/core/tsconfig.node.json"
     },
     {
       "path": "./tsconfig.node.json"
