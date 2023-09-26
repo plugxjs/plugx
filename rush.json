@@ -19,15 +19,18 @@
   "projects": [
     {
       "packageName": "@plugxjs/core",
-      "projectFolder": "packages/core"
+      "projectFolder": "packages/core",
+      "shouldPublish": true
     },
     {
       "packageName": "@plugxjs/idm",
-      "projectFolder": "packages/idm"
+      "projectFolder": "packages/idm",
+      "shouldPublish": true
     },
     {
       "packageName": "@plugxjs/vite-plugin",
-      "projectFolder": "packages/vite-plugin"
+      "projectFolder": "packages/vite-plugin",
+      "shouldPublish": true
     },
     {
       "packageName": "@plugxjs-test/unit",
