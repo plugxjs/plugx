@@ -1,0 +1,20 @@
+{
+  "name": "@plugxjs/vite-plugin",
+  "entries": [
+    {
+      "version": "0.0.2",
+      "tag": "@plugxjs/vite-plugin_v0.0.2",
+      "date": "Tue, 26 Sep 2023 02:22:41 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update external in vite.config.js"
+          },
+          {
+            "comment": "Use dynamic import"
+          }
+        ]
+      }
+    }
+  ]
+}
