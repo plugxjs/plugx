@@ -29,5 +29,5 @@ jobs:
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
       - name: Run tests
-        run: pnpm run test
+        run: rushx test
         working-directory: tests/unit
