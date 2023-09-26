@@ -1,24 +1,24 @@
 /// <reference types="web" />
-import { describe, it, beforeEach } from 'vitest'
-import { createDownloader, Domain } from '@plugxjs/idm'
+import { describe, it, beforeEach } from 'vitest';
+import { createDownloader, Domain } from '@plugxjs/idm';
 
-let downloader: ReturnType<typeof createDownloader>
+let downloader: ReturnType<typeof createDownloader>;
 
-const repository = 'toeverything/AFFiNE'
+const repository = 'toeverything/AFFiNE';
 
 beforeEach(() => {
   downloader = createDownloader({
     domain: Domain.GitHub,
     network: {
-      fetch: globalThis.fetch
+      fetch: globalThis.fetch,
     },
-    packageSection: 'affinePlugin'
-  })
-})
+    packageSection: 'affinePlugin',
+  });
+});
 
 // fixme(himself65): use a mock server in unit tests
 describe('compatible with toeverything/AFFiNE', () => {
   it('download should work', async () => {
-    await downloader.download(repository, './plugins/copilot/package.json')
-  })
-})
+    await downloader.download(repository, './plugins/copilot/package.json');
+  });
+});

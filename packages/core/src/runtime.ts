@@ -1,18 +1,18 @@
-import createVirtualEnvironment from '@locker/near-membrane-dom'
-import CustomElementRegistry from 'happy-dom/lib/custom-element/CustomElementRegistry.js'
+import createVirtualEnvironment from '@locker/near-membrane-dom';
+import CustomElementRegistry from 'happy-dom/lib/custom-element/CustomElementRegistry.js';
 
 export interface Sandbox {
-  evaluate (code: string): unknown
+  evaluate(code: string): unknown;
 
-  allowPermission (permission: Permission): void
+  allowPermission(permission: Permission): void;
 
-  disallowPermission (permission: Permission): void
+  disallowPermission(permission: Permission): void;
 }
 
 export class NoPermissionError extends Error {
-  constructor (message: string) {
-    super(message)
-    this.name = 'NoPermissionError'
+  constructor(message: string) {
+    super(message);
+    this.name = 'NoPermissionError';
   }
 }
 
@@ -24,7 +24,7 @@ export enum Permission {
   Clipboard,
 }
 
-export function createPlugxSandbox (): Sandbox {
+export function createPlugxSandbox(): Sandbox {
   const DOMPermission = [
     document.createElement,
     document.createTextNode,
@@ -47,58 +47,52 @@ export function createPlugxSandbox (): Sandbox {
     document.getElementsByClassName,
     document.getElementsByName,
     document.getElementsByTagName,
-    document.getElementsByTagNameNS
-  ]
+    document.getElementsByTagNameNS,
+  ];
 
-  const NetWorkPermission = [
-    fetch,
-    XMLHttpRequest,
-    WebSocket
-  ]
+  const NetWorkPermission = [fetch, XMLHttpRequest, WebSocket];
 
   const permissionListMap = new Map<Permission, object[]>([
     [Permission.DOM, DOMPermission],
-    [Permission.NetWork, NetWorkPermission]
-  ])
+    [Permission.NetWork, NetWorkPermission],
+  ]);
 
-  const sandboxCustomElements = new CustomElementRegistry()
+  const sandboxCustomElements = new CustomElementRegistry();
 
-  const {
-    get: getCustomElements
-  } = Object.getOwnPropertyDescriptor(window, 'customElements')!
+  const { get: getCustomElements } = Object.getOwnPropertyDescriptor(window, 'customElements')!;
 
   const distortionMap = new Map<unknown, () => unknown>([
-    [getCustomElements, () => sandboxCustomElements]
-  ])
+    [getCustomElements, () => sandboxCustomElements],
+  ]);
   const environment = createVirtualEnvironment(window, {
-    distortionCallback (v) {
-      return distortionMap.get(v) ?? v
+    distortionCallback(v) {
+      return distortionMap.get(v) ?? v;
     },
-    globalObjectShape: window
-  })
+    globalObjectShape: window,
+  });
   const sandbox = {
-    allowPermission (permission: Permission) {
+    allowPermission(permission: Permission) {
       permissionListMap.get(permission)?.forEach((v) => {
         distortionMap.set(v, () => {
-          throw new NoPermissionError(`No permission to call ${v}`)
-        })
-      })
+          throw new NoPermissionError(`No permission to call ${v}`);
+        });
+      });
     },
-    disallowPermission (permission: Permission) {
+    disallowPermission(permission: Permission) {
       permissionListMap.get(permission)?.forEach((v) => {
-        distortionMap.delete(v)
-      })
+        distortionMap.delete(v);
+      });
     },
-    evaluate (code: string) {
-      return environment.evaluate(code)
-    }
-  }
+    evaluate(code: string) {
+      return environment.evaluate(code);
+    },
+  };
 
   permissionListMap.forEach((_, permission) => {
-    sandbox.disallowPermission(permission)
-  })
+    sandbox.disallowPermission(permission);
+  });
 
-  Object.freeze(sandbox)
+  Object.freeze(sandbox);
 
-  return sandbox
+  return sandbox;
 }

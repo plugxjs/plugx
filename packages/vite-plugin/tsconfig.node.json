@@ -2,16 +2,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./.cache/dist",
-    "lib": [
-      "ESNext"
-    ],
-    "types": [
-      "node"
-    ]
+    "lib": ["ESNext"],
+    "types": ["node"]
   },
-  "include": [
-    "vite.config.ts"
-  ],
+  "include": ["vite.config.ts"],
   "references": [
     {
       "path": "./tsconfig.json"

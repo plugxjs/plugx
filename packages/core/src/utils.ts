@@ -1,6 +1,4 @@
-type ExportsPromiseOrExports =
-  | Promise<{ [key: string]: any }>
-  | { [key: string]: any };
+type ExportsPromiseOrExports = Promise<{ [key: string]: any }> | { [key: string]: any };
 
 export async function setupImportsMap(
   map: Map<string, Map<string, any>>,

@@ -1,48 +1,45 @@
-import {
-  createPlugxSandbox,
-  NoPermissionError,
-  Permission
-} from '@plugxjs/core/runtime'
-import type { SandboxEntry } from '@plugxjs/core'
+import { createPlugxSandbox, NoPermissionError, Permission } from '@plugxjs/core/runtime';
+import type { SandboxEntry } from '@plugxjs/core';
 
 Object.defineProperty(globalThis, 'NoPermissionError', {
-  value: NoPermissionError
-})
+  value: NoPermissionError,
+});
 
-const createSimpleCode = (code: string) => `({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {$h‍_imports([]);${code}};`
+const createSimpleCode = (code: string) =>
+  `({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {$h‍_imports([]);${code}};`;
 
 describe('basic', () => {
   it('sandbox should work', () => {
-    const sandbox = createPlugxSandbox()
-    const response = sandbox.evaluate('1+1')
+    const sandbox = createPlugxSandbox();
+    const response = sandbox.evaluate('1+1');
     if (response !== 2) {
-      throw new Error('sandbox should work')
+      throw new Error('sandbox should work');
     }
-  })
+  });
 
   it('should basic permission in sandbox works', () => {
-    const sandbox = createPlugxSandbox()
+    const sandbox = createPlugxSandbox();
     sandbox.evaluate(`try {
 document.createElement('div')
 } catch (e) {
   if (!(e instanceof NoPermissionError)) {
     throw new Error('should throw NoPermissionError')
   }
-}`)
-    sandbox.allowPermission(Permission.DOM)
-    sandbox.evaluate(`document.createElement('div')`)
-    sandbox.disallowPermission(Permission.DOM)
+}`);
+    sandbox.allowPermission(Permission.DOM);
+    sandbox.evaluate(`document.createElement('div')`);
+    sandbox.disallowPermission(Permission.DOM);
     try {
-      sandbox.evaluate(`document.createElement('div')`)
+      sandbox.evaluate(`document.createElement('div')`);
     } catch (e) {
       if (!(e instanceof NoPermissionError)) {
-        throw new Error('should throw NoPermissionError')
+        throw new Error('should throw NoPermissionError');
       }
     }
-  })
+  });
 
   it('should custom elements works', () => {
-    const sandbox = createPlugxSandbox()
+    const sandbox = createPlugxSandbox();
     sandbox.evaluate(`
 class WordCount extends HTMLElement {
   constructor() {
@@ -57,54 +54,51 @@ class WordCount extends HTMLElement {
   
   testFn () {}
 }
-customElements.define('word-count', WordCount)`)
+customElements.define('word-count', WordCount)`);
     {
-      const elementConstructor = globalThis.customElements.get('word-count')
+      const elementConstructor = globalThis.customElements.get('word-count');
       if (elementConstructor != null) {
-        throw new Error('elementConstructor should not be undefined')
+        throw new Error('elementConstructor should not be undefined');
       }
     }
     {
-      const elementConstructor = sandbox.evaluate(
-        `customElements.get('word-count')`)
+      const elementConstructor = sandbox.evaluate(`customElements.get('word-count')`);
       if (elementConstructor == null) {
-        throw new Error('elementConstructor should be undefined')
+        throw new Error('elementConstructor should be undefined');
       }
-      customElements.define('word-count', elementConstructor as any)
-      const element = document.createElement('word-count')
-      const span = element.shadowRoot?.querySelector('span')
+      customElements.define('word-count', elementConstructor as any);
+      const element = document.createElement('word-count');
+      const span = element.shadowRoot?.querySelector('span');
       if (span?.textContent !== 'Hello, World!') {
-        throw new Error('textContent should be "Hello, World!"')
+        throw new Error('textContent should be "Hello, World!"');
       }
     }
-  })
+  });
 
   it('should escape', () => {
-    let called = false
+    let called = false;
     // @ts-expect-error
-    globalThis.someFn =
-      (value: string) => {
-        called = true
-        if (value !== '1') {
-          throw new Error('not equal')
-        }
+    globalThis.someFn = (value: string) => {
+      called = true;
+      if (value !== '1') {
+        throw new Error('not equal');
       }
-    const sandbox = createPlugxSandbox()
-    const f = sandbox.evaluate(
-      createSimpleCode(`globalThis.someFn('1')`)) as SandboxEntry
+    };
+    const sandbox = createPlugxSandbox();
+    const f = sandbox.evaluate(createSimpleCode(`globalThis.someFn('1')`)) as SandboxEntry;
     if (typeof f !== 'function') {
-      throw new Error('`f` should be a function')
+      throw new Error('`f` should be a function');
     }
     f({
       imports: () => {},
       liveVar: {},
       onceVar: {},
-      importMeta: {}
-    })
+      importMeta: {},
+    });
     // @ts-expect-error
-    delete globalThis.someFn
+    delete globalThis.someFn;
     if (!called) {
-      throw new Error('someFn should be called')
+      throw new Error('someFn should be called');
     }
-  })
-})
+  });
+});

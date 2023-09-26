@@ -1,19 +1,19 @@
-import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   build: {
     lib: {
       entry: {
         index: './src/index.ts',
-        runtime: './src/runtime.ts'
+        runtime: './src/runtime.ts',
       },
-      formats: ['cjs', 'es']
+      formats: ['cjs', 'es'],
     },
     rollupOptions: {
-      external: ['zod', /^@plugxjs/, '@locker/near-membrane-dom', /^happy-dom/]
-    }
+      external: ['zod', /^@plugxjs/, '@locker/near-membrane-dom', /^happy-dom/],
+    },
   },
-  plugins: [dts(), tsconfigPaths()]
-})
+  plugins: [dts(), tsconfigPaths()],
+});

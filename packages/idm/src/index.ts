@@ -1,5 +1,5 @@
-import { pluginRuntimeSectionSchema } from '@plugxjs/core'
-import type { z } from 'zod'
+import { pluginRuntimeSectionSchema } from '@plugxjs/core';
+import type { z } from 'zod';
 
 export enum Domain {
   GitHub = 'github.com',
@@ -10,34 +10,33 @@ export interface DownloaderConfig {
    * The number of files to keep in the cache.
    * @default 20
    */
-  cache?: number
+  cache?: number;
   /**
    * The domain of the repository.
    */
-  domain: Domain
+  domain: Domain;
   network: {
-    fetch: typeof fetch
-  }
+    fetch: typeof fetch;
+  };
   // Every response from the network is a UTF-8 text.
   /**
    * The section in the package.json file where the plugin schema is defined.
    */
-  packageSection: string
+  packageSection: string;
 }
 
 // Format: `:owner/:repo`.
-const validRepositoryNameRegex = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}\/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i
+const validRepositoryNameRegex =
+  /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}\/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
 
-export function createDownloader (config: DownloaderConfig) {
+export function createDownloader(config: DownloaderConfig) {
   const {
-    network: {
-      fetch: downloaderFetch
-    }
-  } = config
+    network: { fetch: downloaderFetch },
+  } = config;
   if (config.domain !== Domain.GitHub) {
-    throw new Error(`Unsupported domain: ${config.domain}`)
+    throw new Error(`Unsupported domain: ${config.domain}`);
   }
-  const baseURL = new URL('https://api.github.com/repos/')
+  const baseURL = new URL('https://api.github.com/repos/');
   return {
     download: async (
       /**
@@ -62,32 +61,34 @@ export function createDownloader (config: DownloaderConfig) {
       ref?: string
     ) => {
       if (!rootPackageJson) {
-        rootPackageJson = 'package.json'
+        rootPackageJson = 'package.json';
       }
       if (!validRepositoryNameRegex.test(repository)) {
-        throw new Error(`Invalid repository name: ${repository}`)
+        throw new Error(`Invalid repository name: ${repository}`);
       }
-      const queryParameters = new URLSearchParams()
+      const queryParameters = new URLSearchParams();
       if (ref) {
-        queryParameters.set('ref', ref)
+        queryParameters.set('ref', ref);
       }
       // https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28#get-repository-content
-      const repositoryContentURL = new URL(`${repository}/contents/`, baseURL)
+      const repositoryContentURL = new URL(`${repository}/contents/`, baseURL);
       /**
        * The entry point for downloading the whole repository is `package.json` file.
        */
-      const packageJsonURL = new URL(rootPackageJson, repositoryContentURL)
+      const packageJsonURL = new URL(rootPackageJson, repositoryContentURL);
       const fileResponse = await downloaderFetch(packageJsonURL, {
         method: 'GET',
         headers: {
-          'Accept': 'application/vnd.github.raw',
-          'X-GitHub-Api-Version': '2022-11-28'
-        }
-      })
-      const packageJsonText = await fileResponse.text()
-      const packageJson = JSON.parse(packageJsonText)
-      const configSection = packageJson[config.packageSection] as z.infer<typeof pluginRuntimeSectionSchema>
-      pluginRuntimeSectionSchema.parse(configSection)
-    }
-  }
+          Accept: 'application/vnd.github.raw',
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      });
+      const packageJsonText = await fileResponse.text();
+      const packageJson = JSON.parse(packageJsonText);
+      const configSection = packageJson[config.packageSection] as z.infer<
+        typeof pluginRuntimeSectionSchema
+      >;
+      pluginRuntimeSectionSchema.parse(configSection);
+    },
+  };
 }
