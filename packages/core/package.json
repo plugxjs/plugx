@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "zod": "^3.22.2",
-    "@locker/near-membrane-dom": "~0.13.3"
+    "@locker/near-membrane-dom": "~0.13.3",
+    "happy-dom": "^12.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.6.5",

@@ -12,7 +12,7 @@ export default defineConfig({
       formats: ['cjs', 'es']
     },
     rollupOptions: {
-      external: ['zod', /^@plugxjs/, '@locker/near-membrane-dom']
+      external: ['zod', /^@plugxjs/, '@locker/near-membrane-dom', /^happy-dom/]
     }
   },
   plugins: [dts(), tsconfigPaths()]

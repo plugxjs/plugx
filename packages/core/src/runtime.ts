@@ -1,7 +1,5 @@
 import createVirtualEnvironment from '@locker/near-membrane-dom'
-import {
-  CustomElementRegistry
-} from './environment/custom-element-registry'
+import CustomElementRegistry from 'happy-dom/lib/custom-element/CustomElementRegistry.js'
 
 export interface Sandbox {
   evaluate (code: string): unknown
