@@ -3,7 +3,11 @@
   "rushVersion": "5.107.3",
   "pnpmVersion": "8.7.6",
   "nodeSupportedVersionRange": ">=18.16.1 <21.0.0",
-  "gitPolicy": {},
+  "gitPolicy": {
+    "changeLogUpdateCommitMessage": "chore: update changelogs [skip ci]",
+    "versionBumpCommitMessage": "chore: release [skip ci]",
+    "changefilesCommitMessage": "chore: update change files [skip ci]"
+  },
   "repository": {
     "url": "https://github.com/plugxjs/plugx",
     "defaultBranch": "main"
