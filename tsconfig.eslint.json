@@ -3,6 +3,12 @@
   "compilerOptions": {
     "allowJs": true
   },
-  "include": ["."],
-  "exclude": ["node_modules", "dist", "lib"]
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib"
+  ]
 }
