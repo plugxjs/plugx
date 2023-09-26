@@ -16,6 +16,7 @@ jobs:
         with:
           name: himself65
           email: himself65@outlook.com
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
