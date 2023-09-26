@@ -30,3 +30,4 @@ jobs:
         run: node common/scripts/install-run-rush.js install
       - name: Run Tests
         run: node ../../common/scripts/install-run-rushx.js test
+        working-directory: tests/unit
