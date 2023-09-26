@@ -72,6 +72,12 @@
     },
     {
       "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tests/integration/tsconfig.node.json"
+    },
+    {
+      "path": "./tests/unit/tsconfig.node.json"
     }
   ],
   "files": [],
