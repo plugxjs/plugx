@@ -1,5 +1,5 @@
 import { pluginRuntimeSectionSchema } from '@plugxjs/core'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 export enum Domain {
   GitHub = 'github.com',
