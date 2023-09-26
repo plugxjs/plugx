@@ -57,6 +57,6 @@ jobs:
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
       - name: Prettier
-        run: node common/scripts/install-run-rush.js prettier
+        run: node common/scripts/install-run-rush.js prettier --check
       - name: Compile
         run: node common/scripts/install-run-rush.js compile

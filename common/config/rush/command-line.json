@@ -14,8 +14,21 @@
       "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
       "safeForSimultaneousRushProcesses": true,
       "autoinstallerName": "rush-prettier",
-      "shellCommand": "pretty-quick --staged"
+      "shellCommand": "pretty-quick"
     }
   ],
-  "parameters": []
+  "parameters": [
+    {
+      "parameterKind": "flag",
+      "longName": "--staged",
+      "associatedCommands": ["prettier"],
+      "description": ""
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--check",
+      "associatedCommands": ["prettier"],
+      "description": ""
+    }
+  ]
 }
