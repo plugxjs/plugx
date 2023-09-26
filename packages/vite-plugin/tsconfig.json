@@ -1,19 +1,13 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": [
-      "ESNext"
-    ],
-    "types": [
-      "web"
-    ],
+    "lib": ["ESNext"],
+    "types": ["web"],
     "outDir": "./dist",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "rootDir": "./src"
   },
-  "include": [
-    "./src"
-  ],
+  "include": ["./src"],
   "references": [
     {
       "path": "../core/tsconfig.json"

@@ -2,18 +2,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./.cache/dist",
-    "lib": [
-      "ESNext"
-    ],
-    "types": [
-      "mocha",
-      "web"
-    ]
+    "lib": ["ESNext"],
+    "types": ["mocha", "web"]
   },
-  "include": [
-    "./tests",
-    "vite.config.ts"
-  ],
+  "include": ["./tests", "vite.config.ts"],
   "references": [
     {
       "path": "../../packages/core/tsconfig.json"

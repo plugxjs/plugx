@@ -18,8 +18,7 @@
     "preRushBuild": [],
     "postRushBuild": []
   },
-  "variants": [
-  ],
+  "variants": [],
   "projects": [
     {
       "packageName": "@plugxjs/core",

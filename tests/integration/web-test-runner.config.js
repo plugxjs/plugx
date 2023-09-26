@@ -1,4 +1,4 @@
-import { esbuildPlugin } from '@web/dev-server-esbuild'
+import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 export default {
   files: ['tests/**/*.spec.ts'],
@@ -6,7 +6,7 @@ export default {
   plugins: [
     esbuildPlugin({
       ts: true,
-      target: 'esnext'
-    })
-  ]
-}
+      target: 'esnext',
+    }),
+  ],
+};

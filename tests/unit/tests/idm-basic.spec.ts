@@ -1,21 +1,21 @@
 /// <reference types="web" />
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createDownloader, Domain } from '@plugxjs/idm'
+import { describe, it, expect, beforeEach } from 'vitest';
+import { createDownloader, Domain } from '@plugxjs/idm';
 
-let downloader: ReturnType<typeof createDownloader>
+let downloader: ReturnType<typeof createDownloader>;
 
 beforeEach(() => {
   downloader = createDownloader({
     domain: Domain.GitHub,
     network: {
-      fetch: globalThis.fetch
+      fetch: globalThis.fetch,
     },
-    packageSection: 'plugx'
-  })
-})
+    packageSection: 'plugx',
+  });
+});
 
 describe('basic', () => {
   it('should work', () => {
-    expect(downloader).toBeDefined()
-  })
-})
+    expect(downloader).toBeDefined();
+  });
+});

@@ -4,7 +4,5 @@
     "moduleResolution": "Node",
     "outDir": "./dist"
   },
-  "include": [
-    "vite.workspace.ts"
-  ]
+  "include": ["vite.workspace.ts"]
 }

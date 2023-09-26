@@ -7,6 +7,14 @@
       "summary": "Runs the TypeScript compiler in the context of Rush.",
       "description": "Runs the TypeScript compiler in the context of Rush.  This command is useful for checking whether a change to your project will cause a compilation error.",
       "enableParallelism": true
+    },
+    {
+      "name": "prettier",
+      "commandKind": "global",
+      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "rush-prettier",
+      "shellCommand": "pretty-quick --staged"
     }
   ],
   "parameters": []
