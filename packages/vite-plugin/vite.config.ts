@@ -10,7 +10,7 @@ export default defineConfig({
       formats: ['cjs', 'es']
     },
     rollupOptions: {
-      external: ['zod', /^@plugxjs/]
+      external: ['zod', /^@plugxjs/, '@endo/static-module-record']
     }
   },
   plugins: [dts(), tsconfigPaths()]
