@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/vite-plugin",
+      "comment": "Use dynamic import",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@plugxjs/vite-plugin"
+}
