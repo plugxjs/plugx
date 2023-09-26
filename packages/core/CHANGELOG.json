@@ -1,0 +1,17 @@
+{
+  "name": "@plugxjs/core",
+  "entries": [
+    {
+      "version": "0.1.0",
+      "tag": "@plugxjs/core_v0.1.0",
+      "date": "Tue, 26 Sep 2023 19:10:01 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Adding sandbox api that allow to run code isolate with main thread but still have some permission from globalThis."
+          }
+        ]
+      }
+    }
+  ]
+}

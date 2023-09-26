@@ -1,0 +1,17 @@
+{
+  "name": "@plugxjs/idm",
+  "entries": [
+    {
+      "version": "0.0.2",
+      "tag": "@plugxjs/idm_v0.0.2",
+      "date": "Tue, 26 Sep 2023 19:10:01 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@plugxjs/core\" to `0.1.0`"
+          }
+        ]
+      }
+    }
+  ]
+}
