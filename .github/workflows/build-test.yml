@@ -29,7 +29,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
+      - name: Rush Install
+        run: node common/scripts/install-run-rush.js install
       - name: Run tests
         run: pnpm run test
+        working-directory: tests/unit
