@@ -1,4 +1,3 @@
-import type { Plugin } from 'vite'
 import { StaticModuleRecord } from '@endo/static-module-record'
 
 export interface PlugxOptions {
@@ -8,7 +7,7 @@ export interface PlugxOptions {
   staticJsonSuffix?: string
 }
 
-export default function plugx (options: PlugxOptions = {}): Plugin {
+export default function plugx (options: PlugxOptions = {}): import('vite').Plugin {
   const staticJsonSuffix = options.staticJsonSuffix ?? '.static.json'
   return {
     name: 'plugx',
