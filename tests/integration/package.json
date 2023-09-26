@@ -3,7 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "test": "wtr"
+    "test": "wtr",
+    "build": "echo 'no build'"
   },
   "dependencies": {
     "@plugxjs/core": "workspace:*",
