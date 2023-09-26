@@ -28,8 +28,5 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
-      - name: Rushx Install
-        run: node common/scripts/install-run-rushx.js install
       - name: Run tests
-        run: rushx test
-        working-directory: tests/unit
+        run: node ../../common/scripts/install-run-rushx.js test
