@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "compile": "tsc -p tsconfig.node.json",
     "test": "wtr",
     "build": "echo 'no build'"
   },
@@ -16,6 +17,7 @@
     "@types/mocha": "^10.0.1",
     "@web/dev-server-esbuild": "^0.4.1",
     "@web/test-runner": "^0.17.1",
+    "typescript": "^5.2.2",
     "vitest": "^0.34.5",
     "vite": "^4.4.9"
   }

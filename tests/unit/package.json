@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "compile": "tsc -p tsconfig.node.json",
     "test": "vitest",
     "build": "echo 'no build'"
   },

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/core",
+      "comment": "Adding compile script to do the typecheck",
+      "type": "none"
+    }
+  ],
+  "packageName": "@plugxjs/core"
+}
