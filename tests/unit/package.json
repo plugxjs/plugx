@@ -1,8 +1,10 @@
 {
-  "name": "@plugx-test/unit",
+  "name": "@plugxjs-test/unit",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "build": "echo 'no build'"
   },
   "dependencies": {
     "@plugxjs/core": "workspace:*",
@@ -10,6 +12,13 @@
     "@plugxjs/vite-plugin": "workspace:*"
   },
   "devDependencies": {
-    "rollup": "^3.29.3"
+    "@types/node": "^20.6.5",
+    "@types/web": "^0.0.115",
+    "rollup": "^3.29.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vite-plugin-dts": "^3.5.4",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.5"
   }
 }
