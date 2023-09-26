@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.107.3",
+  "pnpmVersion": "8.7.6",
+  "nodeSupportedVersionRange": ">=18.16.1 <21.0.0",
+  "gitPolicy": {},
+  "repository": {
+    "url": "https://github.com/plugxjs/plugx",
+    "defaultBranch": "main"
+  },
+  "eventHooks": {
+    "preRushInstall": [],
+    "postRushInstall": [],
+    "preRushBuild": [],
+    "postRushBuild": []
+  },
+  "variants": [
+  ],
+  "projects": [
+    {
+      "packageName": "@plugxjs/core",
+      "projectFolder": "packages/core"
+    },
+    {
+      "packageName": "@plugxjs/idm",
+      "projectFolder": "packages/idm"
+    },
+    {
+      "packageName": "@plugxjs/vite-plugin",
+      "projectFolder": "packages/vite-plugin"
+    },
+    {
+      "packageName": "@plugxjs-test/unit",
+      "projectFolder": "tests/unit",
+      "shouldPublish": false
+    }
+  ]
+}

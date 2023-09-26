@@ -5,7 +5,33 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vite build"
+  },
   "dependencies": {
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.5",
+    "@types/web": "^0.0.115",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vite-plugin-dts": "^3.5.4",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.5"
   }
 }
