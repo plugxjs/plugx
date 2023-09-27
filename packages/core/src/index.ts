@@ -19,6 +19,12 @@ export const pluginRuntimeSectionSchema = z.object({
   assets: z.array(z.string()).optional(),
 });
 
+export const bundleAnalysisSchema = z.object({
+  exports: z.record(z.array(z.string())),
+  imports: z.array(z.string()),
+  reexports: z.record(z.array(z.tuple([z.string(), z.string()]))),
+});
+
 export type PluginResource = {
   entry: {
     core: string;

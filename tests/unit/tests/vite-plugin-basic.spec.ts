@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { build } from 'vite';
-import { fileURLToPath } from 'node:url';
 import { compile } from '@plugxjs/vite-plugin';
 import { plugx } from '@plugxjs/vite-plugin';
 import type { RollupOutput } from 'rollup';
 import type { OutputAsset, OutputChunk } from 'rollup';
+import { resolveFixturePath } from './utils';
+import { createHash } from 'node:crypto';
 
 describe('basic', () => {
   it('compile', () => {
@@ -34,7 +35,7 @@ describe('basic', () => {
         build: {
           minify: false,
           lib: {
-            entry: fileURLToPath(new URL(`./fixtures/basic${ext}`, import.meta.url)),
+            entry: resolveFixturePath(`basic${ext}`),
             fileName: 'test',
             formats: ['es'],
           },
@@ -49,5 +50,48 @@ describe('basic', () => {
       expect(main.code).toMatchSnapshot();
       expect(staticJson.source).toMatchSnapshot();
     }
+  });
+
+  it('should analysis multiple files', async () => {
+    const [{ output }] = (await build({
+      root: resolveFixturePath('import-module'),
+      build: {
+        minify: false,
+        lib: {
+          entry: './src/index.ts',
+          fileName: 'index',
+          formats: ['es'],
+        },
+        rollupOptions: {
+          output: {
+            chunkFileNames: (chunkInfo) => {
+              if (chunkInfo.name) {
+                const hash = createHash('md5')
+                  .update(
+                    Object.values(chunkInfo.moduleIds)
+                      .map((m) => m)
+                      .join()
+                  )
+                  .digest('hex')
+                  .substring(0, 6);
+                return `${chunkInfo.name}-${hash}.mjs`;
+              } else {
+                throw new Error('no name');
+              }
+            },
+            manualChunks: (id) => {
+              if (id.includes('utils.ts')) {
+                return 'utils';
+              }
+              return;
+            },
+          },
+          treeshake: false,
+          external: ['not-exist-module'],
+        },
+      },
+      plugins: [plugx()],
+    })) as RollupOutput[];
+    await expect(output).toMatchFileSnapshot('__snapshots__/import-module.snap');
   });
 });

@@ -1,0 +1,160 @@
+[
+  {
+    "code": "({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
+  let c;
+  $h‍_imports([[\"./utils-c2950b.mjs\", []], [\"not-exist-module\", [[\"c\", [($h‍_a) => c = $h‍_a]]]]]);
+  Object.defineProperty(d, \"name\", { value: \"d\" });
+  $h‍_once.d(d);
+  const a = \"1\";
+  const b = a + 1;
+  $h‍_once.b(b);
+  function d() {
+    return c;
+  }
+};
+",
+    "dynamicImports": [],
+    "exports": [
+      "b",
+      "d",
+      "e",
+    ],
+    "facadeModuleId": "/Users/himself65/Code/plugx/tests/fixtures/import-module/src/index.ts",
+    "fileName": "index.js",
+    "implicitlyLoadedBefore": [],
+    "importedBindings": {
+      "not-exist-module": [
+        "c",
+      ],
+      "utils-c2950b.mjs": [],
+    },
+    "imports": [
+      "utils-c2950b.mjs",
+      "not-exist-module",
+    ],
+    "isDynamicEntry": false,
+    "isEntry": true,
+    "isImplicitEntry": false,
+    "map": null,
+    "moduleIds": [
+      "/Users/himself65/Code/plugx/tests/fixtures/import-module/node_modules/plugxjs-mock-module/index.js",
+      "/Users/himself65/Code/plugx/tests/fixtures/import-module/src/index.ts",
+    ],
+    "modules": {
+      "/Users/himself65/Code/plugx/tests/fixtures/import-module/node_modules/plugxjs-mock-module/index.js": {
+        "code": "const a = '1';",
+        "originalLength": 22,
+        "removedExports": [],
+        "renderedExports": [
+          "a",
+        ],
+        "renderedLength": 14,
+      },
+      "/Users/himself65/Code/plugx/tests/fixtures/import-module/src/index.ts": {
+        "code": "const b = a + 1;
+function d() {
+  return c;
+}",
+        "originalLength": 216,
+        "removedExports": [],
+        "renderedExports": [
+          "b",
+          "d",
+          "e",
+        ],
+        "renderedLength": 45,
+      },
+    },
+    "name": "index",
+    "preliminaryFileName": "index.js",
+    "referencedFiles": [],
+    "sourcemapFileName": null,
+    "type": "chunk",
+    "viteMetadata": {
+      "importedAssets": Set {},
+      "importedCss": Set {},
+    },
+  },
+  {
+    "code": "({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
+  $h‍_imports([]);
+  function test() {
+  }
+  for (let i = 0; i < 10; i++) {
+    test();
+  }
+};
+",
+    "dynamicImports": [],
+    "exports": [],
+    "facadeModuleId": null,
+    "fileName": "utils-c2950b.mjs",
+    "implicitlyLoadedBefore": [],
+    "importedBindings": {},
+    "imports": [],
+    "isDynamicEntry": false,
+    "isEntry": false,
+    "isImplicitEntry": false,
+    "map": null,
+    "moduleIds": [
+      "/Users/himself65/Code/plugx/tests/fixtures/import-module/src/utils.ts",
+    ],
+    "modules": {
+      "/Users/himself65/Code/plugx/tests/fixtures/import-module/src/utils.ts": {
+        "code": "function test() {
+}
+for (let i = 0; i < 10; i++) {
+  test();
+}",
+        "originalLength": 73,
+        "removedExports": [],
+        "renderedExports": [],
+        "renderedLength": 62,
+      },
+    },
+    "name": "utils",
+    "preliminaryFileName": "utils-c2950b.mjs",
+    "referencedFiles": [],
+    "sourcemapFileName": null,
+    "type": "chunk",
+    "viteMetadata": {
+      "importedAssets": Set {},
+      "importedCss": Set {},
+    },
+  },
+  {
+    "fileName": "utils-c2950b.mjs.static.json",
+    "name": undefined,
+    "needsCodeReference": false,
+    "source": "{
+  \"exports\": {},
+  \"imports\": [],
+  \"reexports\": {}
+}",
+    "type": "asset",
+  },
+  {
+    "fileName": "index.js.static.json",
+    "name": undefined,
+    "needsCodeReference": false,
+    "source": "{
+  \"exports\": {
+    \"b\": [
+      \"b\"
+    ],
+    \"d\": [
+      \"d\"
+    ],
+    \"e\": [
+      \"d\"
+    ]
+  },
+  \"imports\": [
+    \"./utils-c2950b.mjs\",
+    \"not-exist-module\"
+  ],
+  \"reexports\": {}
+}",
+    "type": "asset",
+  },
+]
