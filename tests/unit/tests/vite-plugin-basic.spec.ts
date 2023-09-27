@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { build } from 'vite';
-import { fileURLToPath } from 'node:url';
 import { compile } from '@plugxjs/vite-plugin';
 import { plugx } from '@plugxjs/vite-plugin';
 import type { RollupOutput } from 'rollup';
 import type { OutputAsset, OutputChunk } from 'rollup';
+import { resolveFixturePath } from './utils';
 
 describe('basic', () => {
   it('compile', () => {
@@ -34,7 +34,7 @@ describe('basic', () => {
         build: {
           minify: false,
           lib: {
-            entry: fileURLToPath(new URL(`./fixtures/basic${ext}`, import.meta.url)),
+            entry: resolveFixturePath(`basic${ext}`),
             fileName: 'test',
             formats: ['es'],
           },
@@ -49,5 +49,40 @@ describe('basic', () => {
       expect(main.code).toMatchSnapshot();
       expect(staticJson.source).toMatchSnapshot();
     }
+  });
+
+  it('should analysis multiple files', async () => {
+    const [{ output }] = (await build({
+      root: resolveFixturePath('import-module'),
+      build: {
+        minify: false,
+        lib: {
+          entry: './src/index.ts',
+          fileName: 'index',
+          formats: ['es'],
+        },
+        rollupOptions: {
+          output: {
+            chunkFileNames: '[name].js',
+            manualChunks: (id) => {
+              if (id.includes('utils.ts')) {
+                return 'utils';
+              }
+              return;
+            },
+          },
+          treeshake: false,
+          external: ['not-exist-module'],
+        },
+      },
+      plugins: [plugx()],
+    })) as RollupOutput[];
+    output.forEach((chunk) => {
+      if (chunk.type === 'asset') {
+        expect(chunk.source).toMatchSnapshot(chunk.fileName);
+      } else if (chunk.type === 'chunk') {
+        expect(chunk.code).toMatchSnapshot(chunk.fileName);
+      }
+    });
   });
 });

@@ -1,4 +1,8 @@
-import { pluginRuntimeSectionSchema } from '@plugxjs/core';
+import {
+  bundleAnalysisSchema,
+  type PluginResource,
+  pluginRuntimeSectionSchema,
+} from '@plugxjs/core';
 import type { z } from 'zod';
 
 export enum Domain {
@@ -18,11 +22,14 @@ export interface DownloaderConfig {
   network: {
     fetch: typeof fetch;
   };
-  // Every response from the network is a UTF-8 text.
   /**
    * The section in the package.json file where the plugin schema is defined.
    */
   packageSection: string;
+  /**
+   * @default '.static.json'
+   */
+  staticJsonSuffix?: string;
 }
 
 // Format: `:owner/:repo`.
@@ -31,12 +38,35 @@ const validRepositoryNameRegex =
 
 export function createDownloader(config: DownloaderConfig) {
   const {
-    network: { fetch: downloaderFetch },
+    cache = 20,
+    network: { fetch: originalFetch },
+    staticJsonSuffix = '.static.json',
   } = config;
   if (config.domain !== Domain.GitHub) {
     throw new Error(`Unsupported domain: ${config.domain}`);
   }
+  const cacheMap = new Map<string, Response>();
   const baseURL = new URL('https://api.github.com/repos/');
+
+  const downloaderFetch = async (...args: Parameters<typeof fetch>): Promise<Response> => {
+    const key = args.join('\n');
+    const cached = cacheMap.get(key);
+    if (cached) {
+      return cached;
+    }
+    const response = await originalFetch(...args);
+    if (cacheMap.size >= cache) {
+      cacheMap.delete(cacheMap.keys().next().value);
+    }
+    cacheMap.set(key, response);
+    return response;
+  };
+
+  const fetchText = async (...args: Parameters<typeof fetch>): Promise<string> => {
+    const response = await originalFetch(...args);
+    return response.text();
+  };
+
   return {
     download: async (
       /**
@@ -59,7 +89,7 @@ export function createDownloader(config: DownloaderConfig) {
        * @default the repository’s default branch.
        */
       ref?: string
-    ) => {
+    ): Promise<PluginResource> => {
       if (!rootPackageJson) {
         rootPackageJson = 'package.json';
       }
@@ -76,19 +106,73 @@ export function createDownloader(config: DownloaderConfig) {
        * The entry point for downloading the whole repository is `package.json` file.
        */
       const packageJsonURL = new URL(rootPackageJson, repositoryContentURL);
-      const fileResponse = await downloaderFetch(packageJsonURL, {
+      const packageJsonDirectoryURL = new URL('.', packageJsonURL);
+      const packageJsonText = await fetchText(packageJsonURL, {
         method: 'GET',
         headers: {
           Accept: 'application/vnd.github.raw',
           'X-GitHub-Api-Version': '2022-11-28',
         },
       });
-      const packageJsonText = await fileResponse.text();
       const packageJson = JSON.parse(packageJsonText);
       const configSection = packageJson[config.packageSection] as z.infer<
         typeof pluginRuntimeSectionSchema
       >;
       pluginRuntimeSectionSchema.parse(configSection);
+      const coreEntry = configSection.entry.core;
+      const coreEntryURL = new URL(coreEntry, packageJsonDirectoryURL);
+      const coreEntryText = await fetchText(coreEntryURL, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/vnd.github.raw',
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      });
+      const js = new Map<string, string>();
+      const css = new Map<string, string>();
+      const queue = [new URL(coreEntry + staticJsonSuffix, coreEntryURL)];
+      while (queue.length > 0) {
+        const head = queue.shift() as URL;
+        const bundleAnalysis = (await downloaderFetch(head, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/vnd.github.v3.raw',
+            'X-GitHub-Api-Version': '2022-11-28',
+          },
+        }).then((response) => response.json())) as z.infer<typeof bundleAnalysisSchema>;
+        bundleAnalysisSchema.parse(bundleAnalysis);
+        const moduleImports = bundleAnalysis.imports as string[];
+        for (const moduleImport of moduleImports) {
+          if (moduleImport.startsWith('./')) {
+            const moduleImportURL = new URL(moduleImport, head);
+            // download module source code
+            js.set(
+              moduleImport,
+              await fetchText(moduleImportURL, {
+                method: 'GET',
+                headers: {
+                  Accept: 'application/vnd.github.v3.raw',
+                  'X-GitHub-Api-Version': '2022-11-28',
+                },
+              })
+            );
+
+            // analyze inner imports
+            queue.push(new URL(moduleImport + staticJsonSuffix, moduleImportURL));
+          } else {
+            // IDM should not resolve external imports.
+            // TODO: tell outside what external imports need to be resolved.
+          }
+        }
+      }
+
+      return {
+        entry: {
+          core: coreEntryText,
+        },
+        js,
+        css,
+      };
     },
   };
 }

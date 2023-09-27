@@ -20,6 +20,8 @@
     "@web/test-runner": "^0.17.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.5",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "sinon": "^16.0.0",
+    "@types/sinon": "^10.0.17"
   }
 }
