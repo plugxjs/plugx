@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/idm",
+      "comment": "Support download js files.",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@plugxjs/idm"
+}
