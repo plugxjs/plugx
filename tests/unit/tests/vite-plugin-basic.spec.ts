@@ -5,7 +5,6 @@ import { plugx } from '@plugxjs/vite-plugin';
 import type { RollupOutput } from 'rollup';
 import type { OutputAsset, OutputChunk } from 'rollup';
 import { resolveFixturePath } from './utils';
-import { createHash } from 'node:crypto';
 
 describe('basic', () => {
   it('compile', () => {
