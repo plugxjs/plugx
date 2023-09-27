@@ -1,6 +1,7 @@
 import { fake } from 'sinon';
 import { expect } from '@esm-bundle/chai';
 import { createDownloader, Domain } from '@plugxjs/idm';
+import { createPlugxSandbox } from '@plugxjs/core/runtime';
 
 let downloader: ReturnType<typeof createDownloader>;
 
@@ -25,10 +26,10 @@ const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
   } else if (url.endsWith('plugins/basic/index.js')) {
     return new Response(`({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
   let c;
-  $h‍_imports([[\\"./utils-c2950b.mjs\\", []], [\\"not-exist-module\\", [[\\"c\\", [($h‍_a) => c = $h‍_a]]]]]);
-  Object.defineProperty(d, \\"name\\", { value: \\"d\\" });
+  $h‍_imports([["./utils-c2950b.mjs", []], ["not-exist-module", [["c", [($h‍_a) => c = $h‍_a]]]]]);
+  Object.defineProperty(d, "name", { value: "d" });
   $h‍_once.d(d);
-  const a = \\"1\\";
+  const a = "1";
   const b = a + 1;
   $h‍_once.b(b);
   function d() {
@@ -88,7 +89,10 @@ beforeEach(() => {
 
 describe('idm', () => {
   it('download should work', async () => {
-    const { js } = await downloader.download(repository, './plugins/basic/package.json');
+    const { js, entry } = await downloader.download(repository, './plugins/basic/package.json');
+    const sandbox = createPlugxSandbox();
+    const fn = sandbox.evaluate(entry.core);
+    expect(fn).to.instanceof(Function);
     expect(js.has('./utils-c2950b.mjs')).to.be.true;
   });
 });
