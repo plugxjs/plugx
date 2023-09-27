@@ -1,5 +1,10 @@
 import { createPlugxSandbox, NoPermissionError, Permission } from '@plugxjs/core/runtime';
+import { expect } from '@esm-bundle/chai';
 import type { SandboxEntry } from '@plugxjs/core';
+
+Object.defineProperty(globalThis, 'expect', {
+  value: expect,
+});
 
 Object.defineProperty(globalThis, 'NoPermissionError', {
   value: NoPermissionError,
@@ -12,9 +17,7 @@ describe('basic', () => {
   it('sandbox should work', () => {
     const sandbox = createPlugxSandbox();
     const response = sandbox.evaluate('1+1');
-    if (response !== 2) {
-      throw new Error('sandbox should work');
-    }
+    expect(response).to.eq(2);
   });
 
   it('should basic permission in sandbox works', () => {
@@ -22,9 +25,7 @@ describe('basic', () => {
     sandbox.evaluate(`try {
 document.createElement('div')
 } catch (e) {
-  if (!(e instanceof NoPermissionError)) {
-    throw new Error('should throw NoPermissionError')
-  }
+  expect(e instanceof NoPermissionError).to.eq(true);
 }`);
     sandbox.allowPermission(Permission.DOM);
     sandbox.evaluate(`document.createElement('div')`);
@@ -32,9 +33,7 @@ document.createElement('div')
     try {
       sandbox.evaluate(`document.createElement('div')`);
     } catch (e) {
-      if (!(e instanceof NoPermissionError)) {
-        throw new Error('should throw NoPermissionError');
-      }
+      expect(e instanceof NoPermissionError).to.eq(true);
     }
   });
 
@@ -57,21 +56,15 @@ class WordCount extends HTMLElement {
 customElements.define('word-count', WordCount)`);
     {
       const elementConstructor = globalThis.customElements.get('word-count');
-      if (elementConstructor != null) {
-        throw new Error('elementConstructor should not be undefined');
-      }
+      expect(elementConstructor).to.be.undefined;
     }
     {
       const elementConstructor = sandbox.evaluate(`customElements.get('word-count')`);
-      if (elementConstructor == null) {
-        throw new Error('elementConstructor should be undefined');
-      }
+      expect(elementConstructor).not.to.be.undefined;
       customElements.define('word-count', elementConstructor as any);
       const element = document.createElement('word-count');
       const span = element.shadowRoot?.querySelector('span');
-      if (span?.textContent !== 'Hello, World!') {
-        throw new Error('textContent should be "Hello, World!"');
-      }
+      expect(span?.textContent).to.eq('Hello, World!');
     }
   });
 
@@ -80,15 +73,11 @@ customElements.define('word-count', WordCount)`);
     // @ts-expect-error
     globalThis.someFn = (value: string) => {
       called = true;
-      if (value !== '1') {
-        throw new Error('not equal');
-      }
+      expect(value).to.eq('1');
     };
     const sandbox = createPlugxSandbox();
     const f = sandbox.evaluate(createSimpleCode(`globalThis.someFn('1')`)) as SandboxEntry;
-    if (typeof f !== 'function') {
-      throw new Error('`f` should be a function');
-    }
+    expect(f).to.instanceof(Function);
     f({
       imports: () => {},
       liveVar: {},
@@ -97,8 +86,6 @@ customElements.define('word-count', WordCount)`);
     });
     // @ts-expect-error
     delete globalThis.someFn;
-    if (!called) {
-      throw new Error('someFn should be called');
-    }
+    expect(called).to.eq(true);
   });
 });
