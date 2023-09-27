@@ -77,6 +77,12 @@ describe('basic', () => {
       },
       plugins: [plugx()],
     })) as RollupOutput[];
-    await expect(output).toMatchFileSnapshot('__snapshots__/import-module.snap');
+    output.forEach((chunk) => {
+      if (chunk.type === 'asset') {
+        expect(chunk.source).toMatchSnapshot(chunk.fileName);
+      } else if (chunk.type === 'chunk') {
+        expect(chunk.code).toMatchSnapshot(chunk.fileName);
+      }
+    });
   });
 });

@@ -1,5 +1,62 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`basic > should analysis multiple files > index.js 1`] = `
+"({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
+  let c;
+  $h‍_imports([[\\"./utils.js\\", []], [\\"not-exist-module\\", [[\\"c\\", [($h‍_a) => c = $h‍_a]]]]]);
+  Object.defineProperty(d, \\"name\\", { value: \\"d\\" });
+  $h‍_once.d(d);
+  const a = \\"1\\";
+  const b = a + 1;
+  $h‍_once.b(b);
+  function d() {
+    return c;
+  }
+};
+"
+`;
+
+exports[`basic > should analysis multiple files > index.js.static.json 1`] = `
+"{
+  \\"exports\\": {
+    \\"b\\": [
+      \\"b\\"
+    ],
+    \\"d\\": [
+      \\"d\\"
+    ],
+    \\"e\\": [
+      \\"d\\"
+    ]
+  },
+  \\"imports\\": [
+    \\"./utils.js\\",
+    \\"not-exist-module\\"
+  ],
+  \\"reexports\\": {}
+}"
+`;
+
+exports[`basic > should analysis multiple files > utils.js 1`] = `
+"({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
+  $h‍_imports([]);
+  function test() {
+  }
+  for (let i = 0; i < 10; i++) {
+    test();
+  }
+};
+"
+`;
+
+exports[`basic > should analysis multiple files > utils.js.static.json 1`] = `
+"{
+  \\"exports\\": {},
+  \\"imports\\": [],
+  \\"reexports\\": {}
+}"
+`;
+
 exports[`basic > should works 1`] = `
 "({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
   $h‍_imports([]);
