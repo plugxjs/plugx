@@ -64,21 +64,7 @@ describe('basic', () => {
         },
         rollupOptions: {
           output: {
-            chunkFileNames: (chunkInfo) => {
-              if (chunkInfo.name) {
-                const hash = createHash('md5')
-                  .update(
-                    Object.values(chunkInfo.moduleIds)
-                      .map((m) => m)
-                      .join()
-                  )
-                  .digest('hex')
-                  .substring(0, 6);
-                return `${chunkInfo.name}-${hash}.mjs`;
-              } else {
-                throw new Error('no name');
-              }
-            },
+            chunkFileNames: '[name].js',
             manualChunks: (id) => {
               if (id.includes('utils.ts')) {
                 return 'utils';
