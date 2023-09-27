@@ -18,7 +18,7 @@ export interface DownloaderConfig {
   /**
    * The domain of the repository.
    */
-  domain: Domain;
+  domain: Domain | URL;
   network: {
     fetch: typeof fetch;
   };
@@ -42,11 +42,27 @@ export function createDownloader(config: DownloaderConfig) {
     network: { fetch: originalFetch },
     staticJsonSuffix = '.static.json',
   } = config;
-  if (config.domain !== Domain.GitHub) {
-    throw new Error(`Unsupported domain: ${config.domain}`);
-  }
   const cacheMap = new Map<string, Response>();
-  const baseURL = new URL('https://api.github.com/repos/');
+  const baseURL = ((): URL => {
+    switch (config.domain) {
+      case Domain.GitHub:
+        return new URL('https://api.github.com/repos/');
+      default:
+        return config.domain;
+    }
+  })();
+
+  const headers = ((): Record<string, string> => {
+    switch (config.domain) {
+      case Domain.GitHub:
+        return {
+          Accept: 'application/vnd.github.v3.raw',
+          'X-GitHub-Api-Version': '2022-11-28',
+        };
+      default:
+        return {};
+    }
+  })();
 
   const downloaderFetch = async (...args: Parameters<typeof fetch>): Promise<Response> => {
     const key = args.join('\n');
@@ -68,6 +84,9 @@ export function createDownloader(config: DownloaderConfig) {
   };
 
   return {
+    /**
+     * This does not care about whether the code itself is valid or not.
+     */
     download: async (
       /**
        * Full repository name in the format of `:owner/:repo`.
@@ -96,12 +115,20 @@ export function createDownloader(config: DownloaderConfig) {
       if (!validRepositoryNameRegex.test(repository)) {
         throw new Error(`Invalid repository name: ${repository}`);
       }
+      repository += '/';
       const queryParameters = new URLSearchParams();
       if (ref) {
         queryParameters.set('ref', ref);
       }
-      // https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28#get-repository-content
-      const repositoryContentURL = new URL(`${repository}/contents/`, baseURL);
+      const repositoryContentURL = (() => {
+        switch (config.domain) {
+          case Domain.GitHub:
+            // https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28#get-repository-content
+            return new URL(`${repository}/contents/`, baseURL);
+          default:
+            return new URL(repository, baseURL);
+        }
+      })();
       /**
        * The entry point for downloading the whole repository is `package.json` file.
        */
@@ -109,10 +136,7 @@ export function createDownloader(config: DownloaderConfig) {
       const packageJsonDirectoryURL = new URL('.', packageJsonURL);
       const packageJsonText = await fetchText(packageJsonURL, {
         method: 'GET',
-        headers: {
-          Accept: 'application/vnd.github.raw',
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
+        headers,
       });
       const packageJson = JSON.parse(packageJsonText);
       const configSection = packageJson[config.packageSection] as z.infer<
@@ -123,10 +147,7 @@ export function createDownloader(config: DownloaderConfig) {
       const coreEntryURL = new URL(coreEntry, packageJsonDirectoryURL);
       const coreEntryText = await fetchText(coreEntryURL, {
         method: 'GET',
-        headers: {
-          Accept: 'application/vnd.github.raw',
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
+        headers,
       });
       const js = new Map<string, string>();
       const css = new Map<string, string>();
@@ -135,10 +156,7 @@ export function createDownloader(config: DownloaderConfig) {
         const head = queue.shift() as URL;
         const bundleAnalysis = (await downloaderFetch(head, {
           method: 'GET',
-          headers: {
-            Accept: 'application/vnd.github.v3.raw',
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
+          headers,
         }).then((response) => response.json())) as z.infer<typeof bundleAnalysisSchema>;
         bundleAnalysisSchema.parse(bundleAnalysis);
         const moduleImports = bundleAnalysis.imports as string[];
@@ -150,10 +168,7 @@ export function createDownloader(config: DownloaderConfig) {
               moduleImport,
               await fetchText(moduleImportURL, {
                 method: 'GET',
-                headers: {
-                  Accept: 'application/vnd.github.v3.raw',
-                  'X-GitHub-Api-Version': '2022-11-28',
-                },
+                headers,
               })
             );
 
