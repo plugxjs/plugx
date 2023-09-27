@@ -13,6 +13,7 @@
     "@plugxjs/vite-plugin": "workspace:*"
   },
   "devDependencies": {
+    "@esm-bundle/chai": "^4.3.4-fix.0",
     "@types/web": "^0.0.115",
     "@types/mocha": "^10.0.1",
     "@web/dev-server-esbuild": "^0.4.1",

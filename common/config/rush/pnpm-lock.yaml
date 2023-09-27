@@ -113,6 +113,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vite-plugin
     devDependencies:
+      '@esm-bundle/chai':
+        specifier: ^4.3.4-fix.0
+        version: 4.3.4-fix.0
       '@types/mocha':
         specifier: ^10.0.1
         version: 10.0.1
@@ -707,6 +710,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@esm-bundle/chai@4.3.4-fix.0:
+    resolution: {integrity: sha512-26SKdM4uvDWlY8/OOOxSB1AqQWeBosCX3wRYUZO7enTAj03CtVxIiCimYVG2WpULcyV51qapK4qTovwkUr5Mlw==}
+    dependencies:
+      '@types/chai': 4.3.6
+    dev: true
 
   /@jest/schemas@29.6.3:
     resolution: {integrity: sha512-mo5j5X+jIZmJQveBKeS/clAueipV7KgiX1vMgCxam1RNYiqE1w62n0/tJJnHtjW8ZHcQco5gY85jA3mi0L+nSA==}
