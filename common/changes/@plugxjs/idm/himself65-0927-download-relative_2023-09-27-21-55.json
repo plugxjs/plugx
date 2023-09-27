@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/idm",
+      "comment": "Support download code from custom domain url.",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@plugxjs/idm"
+}
