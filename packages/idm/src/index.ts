@@ -115,7 +115,6 @@ export function createDownloader(config: DownloaderConfig) {
       if (!validRepositoryNameRegex.test(repository)) {
         throw new Error(`Invalid repository name: ${repository}`);
       }
-      repository += '/';
       const queryParameters = new URLSearchParams();
       if (ref) {
         queryParameters.set('ref', ref);
@@ -126,7 +125,7 @@ export function createDownloader(config: DownloaderConfig) {
             // https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28#get-repository-content
             return new URL(`${repository}/contents/`, baseURL);
           default:
-            return new URL(repository, baseURL);
+            return new URL(repository + '/', baseURL);
         }
       })();
       /**
