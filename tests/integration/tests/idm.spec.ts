@@ -26,7 +26,7 @@ const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
   } else if (url.endsWith('plugins/basic/index.js')) {
     return new Response(`({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
   let c;
-  $h‍_imports([["./utils-c2950b.mjs", []], ["not-exist-module", [["c", [($h‍_a) => c = $h‍_a]]]]]);
+  $h‍_imports([["./utils.js", []], ["not-exist-module", [["c", [($h‍_a) => c = $h‍_a]]]]]);
   Object.defineProperty(d, "name", { value: "d" });
   $h‍_once.d(d);
   const a = "1";
@@ -37,7 +37,7 @@ const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
   }
 };
 `);
-  } else if (url.endsWith('plugins/basic/utils-c2950b.mjs')) {
+  } else if (url.endsWith('plugins/basic/utils.js')) {
     return new Response(`({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
   $h‍_imports([]);
   function test() {
@@ -61,12 +61,12 @@ const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
     ]
   },
   "imports": [
-    "./utils-c2950b.mjs",
+    "./utils.js",
     "not-exist-module"
   ],
   "reexports": {}
 }`);
-  } else if (url.endsWith('plugins/basic/utils-c2950b.mjs.static.json')) {
+  } else if (url.endsWith('plugins/basic/utils.js.static.json')) {
     return new Response(`{
   "exports": {},
   "imports": [],
@@ -93,6 +93,6 @@ describe('idm', () => {
     const sandbox = createPlugxSandbox();
     const fn = sandbox.evaluate(entry.core);
     expect(fn).to.instanceof(Function);
-    expect(js.has('./utils-c2950b.mjs')).to.be.true;
+    expect(js.has('./utils.js')).to.be.true;
   });
 });
