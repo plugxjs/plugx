@@ -1,4 +1,4 @@
-import { pluginRuntimeSectionSchema } from '@plugxjs/core';
+import { type PluginResource, pluginRuntimeSectionSchema } from '@plugxjs/core';
 import type { z } from 'zod';
 
 export enum Domain {
@@ -59,7 +59,7 @@ export function createDownloader(config: DownloaderConfig) {
        * @default the repository’s default branch.
        */
       ref?: string
-    ) => {
+    ): Promise<PluginResource> => {
       if (!rootPackageJson) {
         rootPackageJson = 'package.json';
       }
@@ -76,6 +76,7 @@ export function createDownloader(config: DownloaderConfig) {
        * The entry point for downloading the whole repository is `package.json` file.
        */
       const packageJsonURL = new URL(rootPackageJson, repositoryContentURL);
+      const packageJsonDirectoryURL = new URL('.', packageJsonURL);
       const fileResponse = await downloaderFetch(packageJsonURL, {
         method: 'GET',
         headers: {
@@ -89,6 +90,24 @@ export function createDownloader(config: DownloaderConfig) {
         typeof pluginRuntimeSectionSchema
       >;
       pluginRuntimeSectionSchema.parse(configSection);
+      const coreEntry = configSection.entry.core;
+      const coreEntryURL = new URL(coreEntry, packageJsonDirectoryURL);
+      const coreEntryResponse = await downloaderFetch(coreEntryURL, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/vnd.github.raw',
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      });
+      const coreEntryText = await coreEntryResponse.text();
+
+      return {
+        entry: {
+          core: coreEntryText,
+        },
+        js: new Map(),
+        css: new Map(),
+      };
     },
   };
 }

@@ -18,3 +18,11 @@ export const pluginRuntimeSectionSchema = z.object({
   }),
   assets: z.array(z.string()).optional(),
 });
+
+export type PluginResource = {
+  entry: {
+    core: string;
+  };
+  js: Map<string, string>;
+  css: Map<string, string>;
+};
