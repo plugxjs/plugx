@@ -1,0 +1,1 @@
+# `@plugxjs/vite-plugin`

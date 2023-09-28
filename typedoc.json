@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["packages/*"],
+  "name": "PlugX",
+  "readme": "./README.doc.md",
+  "entryPointStrategy": "packages",
+  "includeVersion": true
+}

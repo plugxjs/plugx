@@ -10,9 +10,6 @@ export interface SandboxEntry {
 }
 
 export const pluginRuntimeSectionSchema = z.object({
-  /**
-   * The entry point for the plugin.
-   */
   entry: z.object({
     core: z.string(),
   }),
