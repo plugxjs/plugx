@@ -2,6 +2,9 @@ import { fake } from 'sinon';
 import { expect } from '@esm-bundle/chai';
 import { createDownloader, Domain } from '@plugxjs/idm';
 import { createPlugxSandbox } from '@plugxjs/core/runtime';
+import { compile } from '@plugxjs/vite-plugin';
+import { z } from 'zod';
+import { pluginRuntimeSectionSchema } from '@plugxjs/core';
 
 let downloader: ReturnType<typeof createDownloader>;
 
@@ -9,75 +12,76 @@ const repository = 'plugxjs/examples';
 
 describe('idm', () => {
   it('download should work with domain GitHub', async () => {
+    const resourceMap = new Map<string, string>();
+    async function setupMockCode(code: string, path: string) {
+      const { source, metadata } = await compile(code, path);
+      resourceMap.set(`https://api.github.com/repos/${repository}/contents/${path}`, source);
+      resourceMap.set(
+        `https://api.github.com/repos/${repository}/contents/${path}.static.json`,
+        JSON.stringify(metadata)
+      );
+      return {
+        [Symbol.dispose]: () => {
+          console.log('dispose');
+          resourceMap.delete(`https://api.github.com/repos/${repository}/contents/${path}`);
+          resourceMap.delete(
+            `https://api.github.com/repos/${repository}/contents/${path}.static.json`
+          );
+        },
+      };
+    }
+
     const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
       expect(_input).to.instanceof(URL);
       const input = _input as URL;
       const url = input.toString();
-      if (url.endsWith('plugins/basic/package.json')) {
-        return new Response(
-          JSON.stringify({
-            type: 'module',
-            affinePlugin: {
-              release: false,
-              entry: {
-                core: './index.js',
-              },
-            },
-          })
-        );
-      } else if (url.endsWith('plugins/basic/index.js')) {
-        return new Response(`({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
-  let c;
-  $h‍_imports([["./utils.js", []], ["not-exist-module", [["c", [($h‍_a) => c = $h‍_a]]]]]);
-  Object.defineProperty(d, "name", { value: "d" });
-  $h‍_once.d(d);
-  const a = "1";
-  const b = a + 1;
-  $h‍_once.b(b);
-  function d() {
-    return c;
-  }
-};
-`);
-      } else if (url.endsWith('plugins/basic/utils.js')) {
-        return new Response(`({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {
-  $h‍_imports([]);
-  function test() {
-  }
-  for (let i = 0; i < 10; i++) {
-    test();
-  }
-};
-`);
-      } else if (url.endsWith('plugins/basic/index.js.static.json')) {
-        return new Response(`{
-  "exports": {
-    "b": [
-      "b"
-    ],
-    "d": [
-      "d"
-    ],
-    "e": [
-      "d"
-    ]
-  },
-  "imports": [
-    "./utils.js",
-    "not-exist-module"
-  ],
-  "reexports": {}
-}`);
-      } else if (url.endsWith('plugins/basic/utils.js.static.json')) {
-        return new Response(`{
-  "exports": {},
-  "imports": [],
-  "reexports": {}
-}`);
+      const content = resourceMap.get(url);
+      if (content) {
+        return new Response(content);
       } else {
         throw new Error(`Unexpected URL: ${url}`);
       }
     });
+
+    const runtimeConfig = {
+      entry: {
+        core: './index.js',
+      },
+      assets: [],
+    } satisfies z.infer<typeof pluginRuntimeSectionSchema>;
+
+    resourceMap.set(
+      `https://api.github.com/repos/${repository}/contents/plugins/basic/package.json`,
+      JSON.stringify({
+        type: 'module',
+        affinePlugin: runtimeConfig,
+      })
+    );
+    await setupMockCode(
+      `import './utils.js';
+const a = 1;
+export const b = a + 1;
+
+import { c } from 'not-exist-module';
+
+export function d() {
+  return c;
+}
+
+export { d as e };
+`,
+      'plugins/basic/index.js'
+    );
+
+    await setupMockCode(
+      `function test() {
+}
+for (let i = 0; i < 10; i++) {
+  test();
+}
+`,
+      'plugins/basic/utils.js'
+    );
     downloader = createDownloader({
       domain: Domain.GitHub,
       network: {
@@ -90,9 +94,17 @@ describe('idm', () => {
     const fn = sandbox.evaluate(entry.core);
     expect(fn).to.instanceof(Function);
     expect(js.has('./utils.js')).to.be.true;
+
+    resourceMap.clear();
   });
 
   it('download should work with domain URL', async () => {
+    const runtimeConfig = {
+      entry: {
+        core: './index.js',
+      },
+    } satisfies z.infer<typeof pluginRuntimeSectionSchema>;
+
     const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
       const input = _input as URL;
       const url = input.toString();
@@ -100,12 +112,7 @@ describe('idm', () => {
         return new Response(
           JSON.stringify({
             type: 'module',
-            affinePlugin: {
-              release: false,
-              entry: {
-                core: './index.js',
-              },
-            },
+            affinePlugin: runtimeConfig,
           })
         );
       } else if (url === `http://localhost:8080/relative/${repository}/index.js`) {
