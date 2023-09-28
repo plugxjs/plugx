@@ -44,6 +44,11 @@
       "packageName": "@plugxjs-test/integration",
       "projectFolder": "tests/integration",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@plugxjs/docs",
+      "projectFolder": "docs",
+      "shouldPublish": false
     }
   ]
 }
