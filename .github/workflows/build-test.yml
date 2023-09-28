@@ -81,4 +81,4 @@ jobs:
       - name: Prettier
         run: node common/scripts/install-run-rush.js prettier --check
       - name: Compile
-        run: node common/scripts/install-run-rush.js compile
+        run: node common/scripts/install-run-rush.js typecheck

@@ -15,6 +15,14 @@
       "safeForSimultaneousRushProcesses": true,
       "autoinstallerName": "rush-prettier",
       "shellCommand": "pretty-quick"
+    },
+    {
+      "name": "typecheck",
+      "commandKind": "global",
+      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "typecheck",
+      "shellCommand": "tsc -b tsconfig.json --diagnostics"
     }
   ],
   "parameters": [
