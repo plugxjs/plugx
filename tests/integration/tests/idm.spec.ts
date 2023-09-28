@@ -20,15 +20,6 @@ describe('idm', () => {
         `https://api.github.com/repos/${repository}/contents/${path}.static.json`,
         JSON.stringify(metadata)
       );
-      return {
-        [Symbol.dispose]: () => {
-          console.log('dispose');
-          resourceMap.delete(`https://api.github.com/repos/${repository}/contents/${path}`);
-          resourceMap.delete(
-            `https://api.github.com/repos/${repository}/contents/${path}.static.json`
-          );
-        },
-      };
     }
 
     const mockFetch = fake(async (_input: RequestInfo | URL): Promise<any> => {
