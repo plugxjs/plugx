@@ -23,6 +23,14 @@
       "safeForSimultaneousRushProcesses": true,
       "autoinstallerName": "typecheck",
       "shellCommand": "tsc -b tsconfig.json --diagnostics"
+    },
+    {
+      "name": "typedoc",
+      "commandKind": "global",
+      "summary": "TypeDoc documentation generator",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "typedoc",
+      "shellCommand": "typedoc"
     }
   ],
   "parameters": [

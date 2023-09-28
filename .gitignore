@@ -144,3 +144,6 @@ temp
 
 # macOS files
 .DS_Store
+
+# typedoc output
+docs/

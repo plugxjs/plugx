@@ -19,7 +19,7 @@ export interface PlugxOptions {
   staticJsonSuffix?: string;
 }
 
-interface CompileResult {
+export interface CompileResult {
   metadata: {
     exports: Record<string, string>;
     imports: string[];
