@@ -19,7 +19,7 @@
     {
       "name": "typecheck",
       "commandKind": "global",
-      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "summary": "TypeScript type checker",
       "safeForSimultaneousRushProcesses": true,
       "autoinstallerName": "typecheck",
       "shellCommand": "tsc -b tsconfig.json --diagnostics"
