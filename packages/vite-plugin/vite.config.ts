@@ -12,6 +12,8 @@ export default defineConfig({
       formats: ['cjs', 'es'],
     },
     rollupOptions: {
+      // `@endo/static-module-record`
+      //  will be bundled into the output as expected.
       external: ['zod', /^@plugxjs/],
     },
   },
