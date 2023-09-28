@@ -7,8 +7,8 @@ import type { OutputAsset, OutputChunk } from 'rollup';
 import { resolveFixturePath } from './utils';
 
 describe('basic', () => {
-  it('compile', () => {
-    const { source, metadata } = compile('export const a = 1', 'test.ts');
+  it('compile', async () => {
+    const { source, metadata } = await compile('export const a = 1', 'test.ts');
     expect(source).toMatchInlineSnapshot(`
       "(({   imports: $h‍_imports,   liveVar: $h‍_live,   onceVar: $h‍_once,   importMeta: $h‍____meta,  }) => {   $h‍_imports([]);   const        a=  1;$h‍_once.a(a);
       })

@@ -18,6 +18,24 @@ on:
       - '!.github/workflows/build-test.yml'
 
 jobs:
+  verify:
+    name: Verify Change Logs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: himself65
+          email: himself65@outlook.com
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: Verify Change Logs
+        run: node common/scripts/install-run-rush.js change --verify
+
   unit:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -28,6 +46,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
+      - name: Rush Rebuild
+        run: node common/scripts/install-run-rush.js rebuild --verbose
       - name: Run Tests
         run: node ../../common/scripts/install-run-rushx.js test
         working-directory: tests/unit
@@ -42,6 +62,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
+      - name: Rush Rebuild
+        run: node common/scripts/install-run-rush.js rebuild --verbose
       - name: Run Tests
         run: node ../../common/scripts/install-run-rushx.js test
         working-directory: tests/integration

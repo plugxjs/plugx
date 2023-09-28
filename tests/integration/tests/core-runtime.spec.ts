@@ -1,5 +1,6 @@
 import { createPlugxSandbox, NoPermissionError, Permission } from '@plugxjs/core/runtime';
 import { expect } from '@esm-bundle/chai';
+import { compile } from '@plugxjs/vite-plugin';
 import type { SandboxEntry } from '@plugxjs/core';
 
 Object.defineProperty(globalThis, 'expect', {
@@ -10,8 +11,13 @@ Object.defineProperty(globalThis, 'NoPermissionError', {
   value: NoPermissionError,
 });
 
-const createSimpleCode = (code: string) =>
-  `({ imports: $h‍_imports, liveVar: $h‍_live, onceVar: $h‍_once, importMeta: $h‍____meta }) => {$h‍_imports([]);${code}};`;
+Object.defineProperty(globalThis, 'process', {
+  value: {
+    env: {},
+  },
+});
+
+const createCode = async (code: string, fileName: string) => (await compile(code, fileName)).source;
 
 describe('basic', () => {
   it('sandbox should work', () => {
@@ -68,7 +74,7 @@ customElements.define('word-count', WordCount)`);
     }
   });
 
-  it('should escape', () => {
+  it('should escape', async () => {
     let called = false;
     // @ts-expect-error
     globalThis.someFn = (value: string) => {
@@ -76,7 +82,9 @@ customElements.define('word-count', WordCount)`);
       expect(value).to.eq('1');
     };
     const sandbox = createPlugxSandbox();
-    const f = sandbox.evaluate(createSimpleCode(`globalThis.someFn('1')`)) as SandboxEntry;
+    const f = sandbox.evaluate(
+      await createCode(`globalThis.someFn('1')`, 'should-escape.js')
+    ) as SandboxEntry;
     expect(f).to.instanceof(Function);
     f({
       imports: () => {},

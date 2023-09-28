@@ -3,32 +3,28 @@
   "version": "0.0.3",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
   "files": [
     "dist",
     "src"
   ],
   "publishConfig": {
-    "access": "public",
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.js",
-        "require": "./dist/index.cjs"
-      }
-    }
+    "access": "public"
   },
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "build": "vite build"
   },
-  "dependencies": {
-    "@endo/static-module-record": "^0.8.2"
-  },
   "devDependencies": {
     "@types/node": "^20.6.5",
     "@types/web": "^0.0.115",
+    "@endo/static-module-record": "^0.8.2",
+    "buffer": "^6.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vite-plugin-dts": "^3.5.4",
