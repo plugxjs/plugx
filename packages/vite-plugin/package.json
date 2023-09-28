@@ -17,7 +17,6 @@
     "access": "public"
   },
   "scripts": {
-    "compile": "tsc -p tsconfig.json",
     "build": "vite build"
   },
   "devDependencies": {
