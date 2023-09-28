@@ -11,12 +11,6 @@ Object.defineProperty(globalThis, 'NoPermissionError', {
   value: NoPermissionError,
 });
 
-Object.defineProperty(globalThis, 'process', {
-  value: {
-    env: {},
-  },
-});
-
 const createCode = async (code: string, fileName: string) => (await compile(code, fileName)).source;
 
 describe('basic', () => {

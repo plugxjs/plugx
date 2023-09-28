@@ -5,7 +5,7 @@
     "lib": ["ESNext"],
     "types": ["mocha", "web"]
   },
-  "include": ["./tests", "vite.config.ts"],
+  "include": ["./tests", "vite.config.ts", "web-test-runner.config.ts"],
   "references": [
     {
       "path": "../../packages/core/tsconfig.json"
