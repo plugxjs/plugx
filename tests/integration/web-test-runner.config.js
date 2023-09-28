@@ -1,1 +1,1 @@
-export { default } from './web-test-runner.config.ts';
+export { config as default } from './web-test-runner.config.ts';

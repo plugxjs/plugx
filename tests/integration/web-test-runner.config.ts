@@ -1,7 +1,7 @@
 import { type TestRunnerConfig } from '@web/test-runner';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
-export default {
+export const config: TestRunnerConfig = {
   testRunnerHtml: (testFramework: string): string =>
     `<html>
       <body>
@@ -17,4 +17,4 @@ export default {
       target: 'esnext',
     }),
   ],
-} satisfies TestRunnerConfig;
+};
