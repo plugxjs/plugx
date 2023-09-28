@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/vite-plugin",
+      "comment": "Change `compile` API to async function.",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@plugxjs/vite-plugin"
+}
