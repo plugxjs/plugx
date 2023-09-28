@@ -16,8 +16,5 @@
     {
       "path": "../../packages/vite-plugin/tsconfig.json"
     }
-  ],
-  "ts-node": {
-    "esm": true
-  }
+  ]
 }
