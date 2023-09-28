@@ -133,9 +133,6 @@ importers:
       '@web/test-runner':
         specifier: ^0.17.1
         version: 0.17.1(typescript@5.2.2)
-      buffer:
-        specifier: ^6.0.3
-        version: 6.0.3
       sinon:
         specifier: ^16.0.0
         version: 16.0.0
