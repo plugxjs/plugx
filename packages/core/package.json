@@ -3,27 +3,23 @@
   "type": "module",
   "version": "0.1.0",
   "exports": {
-    ".": "./src/index.ts",
-    "./runtime": "./src/runtime.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "import": "./dist/runtime.js",
+      "require": "./dist/runtime.cjs"
+    }
   },
   "files": [
     "dist",
     "src"
   ],
   "publishConfig": {
-    "access": "public",
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.js",
-        "require": "./dist/index.cjs"
-      },
-      "./runtime": {
-        "types": "./dist/runtime.d.ts",
-        "import": "./dist/runtime.js",
-        "require": "./dist/runtime.cjs"
-      }
-    }
+    "access": "public"
   },
   "scripts": {
     "compile": "tsc -p tsconfig.json",

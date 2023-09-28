@@ -1,4 +1,16 @@
-import { StaticModuleRecord } from '@endo/static-module-record';
+import { Buffer } from 'buffer';
+
+if (!globalThis.Buffer) {
+  Object.defineProperty(globalThis, 'Buffer', {
+    value: Buffer,
+  });
+}
+
+const staticModuleRecordPromise = import('@endo/static-module-record').then(
+  ({ StaticModuleRecord }) => {
+    return StaticModuleRecord;
+  }
+);
 
 export interface PlugxOptions {
   /**
@@ -19,7 +31,8 @@ interface CompileResult {
 /**
  * @internal
  */
-export function compile(code: string, fileName: string): CompileResult {
+export async function compile(code: string, fileName: string): Promise<CompileResult> {
+  const StaticModuleRecord = await staticModuleRecordPromise;
   const record = new StaticModuleRecord(code, fileName);
   const reexports = record.__reexportMap__ as Record<
     string,
@@ -41,9 +54,9 @@ export function plugx(options: PlugxOptions = {}): import('vite').Plugin {
   return {
     name: 'plugx',
     enforce: 'post',
-    renderChunk: function (code, chunk) {
+    renderChunk: async function (code, chunk) {
       if (chunk.fileName.endsWith('js')) {
-        const { metadata, source } = compile(code, chunk.fileName);
+        const { metadata, source } = await compile(code, chunk.fileName);
         const fileName = chunk.fileName + staticJsonSuffix;
         this.emitFile({
           type: 'asset',
