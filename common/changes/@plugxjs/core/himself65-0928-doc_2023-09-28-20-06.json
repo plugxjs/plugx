@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/core",
+      "comment": "Add `README.md`.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@plugxjs/core"
+}
