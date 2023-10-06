@@ -31,6 +31,11 @@
       "shouldPublish": true
     },
     {
+      "packageName": "plugx",
+      "projectFolder": "packages/plugx",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@plugxjs/vite-plugin",
       "projectFolder": "packages/vite-plugin",
       "shouldPublish": true

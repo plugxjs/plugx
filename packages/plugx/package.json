@@ -1,0 +1,17 @@
+{
+  "name": "plugx",
+  "description": "Universal plugin framework for web application",
+  "version": "1.0.1",
+  "types": "module",
+  "license": "MIT",
+  "author": "Alex Yang <himself65@outlook.com>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "build": "echo 'no build currently'"
+  }
+}

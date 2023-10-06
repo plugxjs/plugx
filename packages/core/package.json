@@ -2,6 +2,8 @@
   "name": "@plugxjs/core",
   "type": "module",
   "version": "0.1.1",
+  "license": "MIT",
+  "author": "Alex Yang <himself65@outlook.com>",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

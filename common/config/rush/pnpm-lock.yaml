@@ -78,6 +78,8 @@ importers:
         specifier: ^0.34.5
         version: 0.34.5(jsdom@22.1.0)
 
+  ../../packages/plugx: {}
+
   ../../packages/vite-plugin:
     devDependencies:
       '@endo/static-module-record':
