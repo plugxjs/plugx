@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@plugxjs/vite-plugin",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@plugxjs/vite-plugin"
+}
