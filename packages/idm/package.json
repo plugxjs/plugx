@@ -3,6 +3,8 @@
   "description": "PlugX internet download manager",
   "version": "0.1.0",
   "type": "module",
+  "license": "MIT",
+  "author": "Alex Yang <himself65@outlook.com>",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
